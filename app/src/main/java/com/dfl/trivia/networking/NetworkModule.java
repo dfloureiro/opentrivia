@@ -2,7 +2,6 @@ package com.dfl.trivia.networking;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -18,55 +17,54 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkModule {
 
-    private final static String BASE_URL = "https://opentdb.com/";
+  private final static String BASE_URL = "https://opentdb.com/";
 
-    private static NetworkModule instance;
-    private OpentdbApi opentdbApi;
+  private static NetworkModule instance;
+  private OpentdbApi opentdbApi;
 
-    public static NetworkModule newInstance() {
-        if (instance == null) {
-            instance = new NetworkModule();
-        }
-        return instance;
+  private NetworkModule() {
+    setRetrofit();
+  }
+
+  public static NetworkModule newInstance() {
+    if (instance == null) {
+      instance = new NetworkModule();
     }
+    return instance;
+  }
 
+  private static Interceptor provideCacheInterceptor() {
+    return chain -> {
+      Response response = chain.proceed(chain.request());
+      CacheControl cacheControl = new CacheControl.Builder().maxAge(2, TimeUnit.MINUTES)
+          .build();
+      return response.newBuilder()
+          .header("Cache-Control", cacheControl.toString())
+          .build();
+    };
+  }
 
-    private NetworkModule() {
-        setRetrofit();
-    }
+  private void setRetrofit() {
+    opentdbApi = new Retrofit.Builder().baseUrl(BASE_URL)
+        .client(getDefaultClient())
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
+        .create(OpentdbApi.class);
+  }
 
-    private void setRetrofit() {
-        opentdbApi = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(getDefaultClient())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build().create(OpentdbApi.class);
-    }
+  private OkHttpClient getDefaultClient() {
+    final int cacheMaxSize = 10 * 1024 * 1024;  // 10 MiB
 
-    private OkHttpClient getDefaultClient() {
-        final int cacheMaxSize = 10 * 1024 * 1024;  // 10 MiB
+    final OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
+    okHttpClientBuilder.addNetworkInterceptor(provideCacheInterceptor());
+    okHttpClientBuilder.readTimeout(45, TimeUnit.SECONDS);
+    okHttpClientBuilder.writeTimeout(45, TimeUnit.SECONDS);
+    okHttpClientBuilder.cache(new Cache(new File("/"), cacheMaxSize));
+    return okHttpClientBuilder.build();
+  }
 
-        final OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
-        okHttpClientBuilder.addNetworkInterceptor(provideCacheInterceptor());
-        okHttpClientBuilder.readTimeout(45, TimeUnit.SECONDS);
-        okHttpClientBuilder.writeTimeout(45, TimeUnit.SECONDS);
-        okHttpClientBuilder.cache(new Cache(new File("/"), cacheMaxSize));
-        return okHttpClientBuilder.build();
-    }
-
-    private static Interceptor provideCacheInterceptor() {
-        return chain -> {
-            Response response = chain.proceed(chain.request());
-            CacheControl cacheControl = new CacheControl.Builder().maxAge(2, TimeUnit.MINUTES)
-                    .build();
-            return response.newBuilder()
-                    .header("Cache-Control", cacheControl.toString())
-                    .build();
-        };
-    }
-
-    public OpentdbApi getOpentdbApi() {
-        return opentdbApi;
-    }
+  public OpentdbApi getOpentdbApi() {
+    return opentdbApi;
+  }
 }

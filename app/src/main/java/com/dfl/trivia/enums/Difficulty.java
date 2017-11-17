@@ -5,7 +5,5 @@ package com.dfl.trivia.enums;
  */
 
 public enum Difficulty {
-    EASY,
-    MEDIUM,
-    HARD
+  EASY, MEDIUM, HARD
 }

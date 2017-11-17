@@ -5,6 +5,5 @@ package com.dfl.trivia.enums;
  */
 
 public enum Command {
-    REQUEST,
-    RESET
+  REQUEST, RESET
 }

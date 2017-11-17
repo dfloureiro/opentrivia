@@ -5,6 +5,5 @@ package com.dfl.trivia.enums;
  */
 
 public enum QuestionType {
-    MULTIPLE,
-    BOOLEAN
+  MULTIPLE, BOOLEAN
 }

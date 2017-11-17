@@ -8,7 +8,7 @@ import io.reactivex.annotations.Nullable;
 
 public interface BasePresenter<S extends BaseState> {
 
-    void subscribe(@Nullable S state);
+  void subscribe(@Nullable S state);
 
-    void unsubscribe();
+  void unsubscribe();
 }

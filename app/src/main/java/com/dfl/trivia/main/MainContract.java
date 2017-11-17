@@ -4,7 +4,6 @@ import com.dfl.trivia.base.BasePresenter;
 import com.dfl.trivia.base.BaseState;
 import com.dfl.trivia.base.BaseView;
 import com.dfl.trivia.main.model.Category;
-
 import java.util.ArrayList;
 
 /**
@@ -13,26 +12,26 @@ import java.util.ArrayList;
 
 public interface MainContract {
 
-    interface View extends BaseView<Presenter> {
+  interface View extends BaseView<Presenter> {
 
-        void ShowCategory(Category category);
+    void ShowCategory(Category category);
 
-        void setSelectedCategory(int position);
-    }
+    void setSelectedCategory(int position);
+  }
 
-    interface Presenter extends BasePresenter<State> {
+  interface Presenter extends BasePresenter<State> {
 
-        State getState();
+    State getState();
 
-        void getSessionToken();
+    void getSessionToken();
 
-        void getTriviaCategoryList();
-    }
+    void getTriviaCategoryList();
+  }
 
-    interface State extends BaseState {
+  interface State extends BaseState {
 
-        ArrayList<Category> getCategoriesArrayList();
+    ArrayList<Category> getCategoriesArrayList();
 
-        int getSelectedCategoryPosition();
-    }
+    int getSelectedCategoryPosition();
+  }
 }
