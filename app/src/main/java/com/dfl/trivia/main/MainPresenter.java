@@ -20,7 +20,6 @@ public class MainPresenter implements MainContract.Presenter {
   private CompositeDisposable compositeDisposable;
 
   private ArrayList<Category> categoryArrayList;
-  private int selectedCategoryPosition;
 
   public MainPresenter(MainContract.View view, RequestFactory requestFactory) {
     this.view = view;
@@ -34,15 +33,15 @@ public class MainPresenter implements MainContract.Presenter {
   @Override public void subscribe(MainContract.State state) {
     if (state != null) {
       categoryArrayList = state.getCategoriesArrayList();
-      for (Category category : categoryArrayList) {
-        view.ShowCategory(category);
+      if (!categoryArrayList.isEmpty()) {
+        for (Category category : categoryArrayList) {
+          view.ShowCategory(category);
+        }
+        return;
       }
-      selectedCategoryPosition = state.getSelectedCategoryPosition();
-      view.setSelectedCategory(selectedCategoryPosition);
-    } else {
-      getTriviaCategoryList();
-      getSessionToken();
     }
+    getTriviaCategoryList();
+    getSessionToken();
   }
 
   @Override public void unsubscribe() {
@@ -50,7 +49,7 @@ public class MainPresenter implements MainContract.Presenter {
   }
 
   @Override public MainContract.State getState() {
-    return new MainState(categoryArrayList, selectedCategoryPosition);
+    return new MainState(categoryArrayList);
   }
 
   public void getSessionToken() {
@@ -72,6 +71,11 @@ public class MainPresenter implements MainContract.Presenter {
           categoryArrayList.add(category);
           view.ShowCategory(category);
         }, error -> Log.e("Error", error.getMessage())));
+  }
+
+  @Override public String getSelectedCategoryId(int position) {
+    return String.valueOf(categoryArrayList.get(position)
+        .getId());
   }
 
   private void saveSessionToken(String sessionToken) {

@@ -1,15 +1,18 @@
 package com.dfl.trivia.main.model;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
+
 /**
  * Created by Loureiro on 15/11/2017.
  */
 
-public class Category {
+@Parcel public class Category {
 
   private int id;
   private String name;
 
-  public Category(Integer id, String name) {
+  @ParcelConstructor public Category(Integer id, String name) {
     this.id = id;
     this.name = name;
   }

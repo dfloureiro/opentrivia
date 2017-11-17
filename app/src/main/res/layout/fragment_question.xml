@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dfl.trivia.question.QuestionActivityFragment"
+    >
+
+  <TextView
+      android:id="@+id/categorie_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
+
+  <TextView
+      android:id="@+id/difficulty_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/categorie_title"
+      />
+
+  <TextView
+      android:id="@+id/question_text"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/difficulty_title"
+      />
+
+  <LinearLayout
+      android:id="@+id/boolean_type_layout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/question_text"
+      android:orientation="horizontal"
+      android:visibility="gone"
+      >
+    <Button
+        android:id="@+id/false_button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/holo_red_light"
+        android:text="FALSE"
+        style="?android:attr/borderlessButtonStyle"
+        />
+    <Button
+        android:id="@+id/true_button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/holo_green_light"
+        android:text="TRUE"
+        style="?android:attr/borderlessButtonStyle"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/multiple_type_layout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/question_text"
+      android:orientation="vertical"
+      android:visibility="gone"
+      >
+
+    <Button
+        android:id="@+id/answer_a_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:text="Button"
+        />
+
+    <Button
+        android:id="@+id/answer_b_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:background="@android:color/holo_green_light"
+        android:text="Button"
+        />
+
+    <Button
+        android:id="@+id/answer_c_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:background="@android:color/holo_blue_light"
+        android:text="Button"
+        />
+
+    <Button
+        android:id="@+id/answer_d_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:background="@android:color/holo_red_light"
+        android:text="Button"
+        />
+  </LinearLayout>
+</RelativeLayout>

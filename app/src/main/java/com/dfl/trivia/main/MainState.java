@@ -11,22 +11,15 @@ import org.parceler.ParcelConstructor;
 
 @Parcel public class MainState implements MainContract.State {
 
-  public static final String CATEGORY_STATE_KEY = "CATEGORY_STATE_KEY";
+  static final String CATEGORY_STATE_KEY = "CATEGORY_STATE_KEY";
 
   private ArrayList<Category> categoryArrayList;
-  private int selectedCategoryPosition;
 
-  @ParcelConstructor
-  public MainState(ArrayList<Category> categoryArrayList, int selectedCategoryPosition) {
+  @ParcelConstructor MainState(ArrayList<Category> categoryArrayList) {
     this.categoryArrayList = categoryArrayList;
-    this.selectedCategoryPosition = selectedCategoryPosition;
   }
 
   @Override public ArrayList<Category> getCategoriesArrayList() {
     return categoryArrayList;
-  }
-
-  @Override public int getSelectedCategoryPosition() {
-    return selectedCategoryPosition;
   }
 }

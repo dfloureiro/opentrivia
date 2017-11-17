@@ -15,8 +15,6 @@ public interface MainContract {
   interface View extends BaseView<Presenter> {
 
     void ShowCategory(Category category);
-
-    void setSelectedCategory(int position);
   }
 
   interface Presenter extends BasePresenter<State> {
@@ -26,12 +24,12 @@ public interface MainContract {
     void getSessionToken();
 
     void getTriviaCategoryList();
+
+    String getSelectedCategoryId(int position);
   }
 
   interface State extends BaseState {
 
     ArrayList<Category> getCategoriesArrayList();
-
-    int getSelectedCategoryPosition();
   }
 }

@@ -5,8 +5,6 @@ import com.dfl.trivia.data.questions.QuestionsResponse;
 import com.dfl.trivia.data.token.ResetSessionTokenResponse;
 import com.dfl.trivia.data.token.SessionTokenResponse;
 import com.dfl.trivia.enums.Command;
-import com.dfl.trivia.enums.Difficulty;
-import com.dfl.trivia.enums.QuestionType;
 import io.reactivex.Flowable;
 
 /**
@@ -38,12 +36,10 @@ public class RequestFactory {
             .toLowerCase(), sessionToken);
   }
 
-  public Flowable<QuestionsResponse> getQuestionsRequest(String token, int amount, int category,
-      Difficulty difficulty, QuestionType questionType) {
+  public Flowable<QuestionsResponse> getQuestionsRequest(String token, int amount, String category,
+      String difficulty, String questionType) {
     return NetworkModule.newInstance()
         .getOpentdbApi()
-        .getQuestions(token, amount, category, difficulty.toString()
-            .toLowerCase(), questionType.toString()
-            .toLowerCase());
+        .getQuestions(token, amount, category, difficulty, questionType);
   }
 }
