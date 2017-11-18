@@ -11,27 +11,35 @@
       android:id="@+id/categories_spinner"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:visibility="gone"
+      tools:visibility="visible"
       />
 
   <Spinner
       android:id="@+id/difficulties_spinner"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:visibility="gone"
       app:layout_constraintTop_toBottomOf="@+id/categories_spinner"
+      tools:visibility="visible"
       />
 
   <Spinner
       android:id="@+id/gametypes_spinner"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:visibility="gone"
       app:layout_constraintTop_toBottomOf="@+id/difficulties_spinner"
+      tools:visibility="visible"
       />
 
   <Spinner
       android:id="@+id/amounts_spinner"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:visibility="gone"
       app:layout_constraintTop_toBottomOf="@+id/gametypes_spinner"
+      tools:visibility="visible"
       />
 
   <Button
@@ -39,7 +47,21 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="Start"
+      android:visibility="gone"
       app:layout_constraintBottom_toBottomOf="parent"
+      tools:visibility="visible"
+      />
+
+  <android.support.v4.widget.ContentLoadingProgressBar
+      android:id="@+id/loading_spinner"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:visibility="gone"
+      style="?android:attr/progressBarStyleLarge"
       />
 
 

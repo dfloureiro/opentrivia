@@ -37,6 +37,7 @@ public class MainPresenter implements MainContract.Presenter {
         for (Category category : categoryArrayList) {
           view.ShowCategory(category);
         }
+        view.finishLoading();
         return;
       }
     }
@@ -68,6 +69,7 @@ public class MainPresenter implements MainContract.Presenter {
             triviaCategoryList -> Flowable.fromIterable(triviaCategoryList.getTriviaCategories()))
         .map(triviaCategory -> new Category(triviaCategory.getId(), triviaCategory.getName()))
         .subscribe(category -> {
+          view.finishLoading();
           categoryArrayList.add(category);
           view.ShowCategory(category);
         }, error -> Log.e("Error", error.getMessage())));

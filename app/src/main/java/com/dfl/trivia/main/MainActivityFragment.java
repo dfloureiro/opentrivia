@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,10 +39,12 @@ public class MainActivityFragment extends Fragment implements MainContract.View 
   private final static String GAMETYPE_POSITION_KEY = "GAMETYPE_POSITION_KEY";
   private final static String AMOUNTS_POSITION_KEY = "AMOUNTS_POSITION_KEY";
 
+  @BindView(R.id.loading_spinner) ContentLoadingProgressBar loadingProgressBar;
   @BindView(R.id.categories_spinner) Spinner categoriesSpinner;
   @BindView(R.id.difficulties_spinner) Spinner difficultiesSpinner;
   @BindView(R.id.gametypes_spinner) Spinner gameTypesSpinner;
   @BindView(R.id.amounts_spinner) Spinner amountsSpinner;
+  @BindView(R.id.start_button) Button startButton;
 
   private Unbinder unbinder;
   private MainContract.Presenter presenter;
@@ -133,5 +137,14 @@ public class MainActivityFragment extends Fragment implements MainContract.View 
   @Override public void ShowCategory(Category category) {
     categorySpinnerAdapter.add(category.getName());
     categorySpinnerAdapter.notifyDataSetChanged();
+  }
+
+  @Override public void finishLoading() {
+    categoriesSpinner.setVisibility(View.VISIBLE);
+    difficultiesSpinner.setVisibility(View.VISIBLE);
+    gameTypesSpinner.setVisibility(View.VISIBLE);
+    amountsSpinner.setVisibility(View.VISIBLE);
+    startButton.setVisibility(View.VISIBLE);
+    loadingProgressBar.setVisibility(View.GONE);
   }
 }

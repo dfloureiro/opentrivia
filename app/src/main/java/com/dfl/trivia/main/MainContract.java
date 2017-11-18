@@ -15,6 +15,8 @@ public interface MainContract {
   interface View extends BaseView<Presenter> {
 
     void ShowCategory(Category category);
+
+    void finishLoading();
   }
 
   interface Presenter extends BasePresenter<State> {
