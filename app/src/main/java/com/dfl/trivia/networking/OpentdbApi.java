@@ -12,6 +12,8 @@ import retrofit2.http.Query;
  * Created by Loureiro on 13/11/2017.
  */
 
+//https://opentdb.com/api_config.php
+
 public interface OpentdbApi {
 
   @GET("api_category.php") Flowable<TriviaCategoryList> getTriviaCategoryList();

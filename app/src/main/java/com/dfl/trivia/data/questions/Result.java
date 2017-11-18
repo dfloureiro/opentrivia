@@ -3,8 +3,9 @@ package com.dfl.trivia.data.questions;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
+import org.parceler.Parcel;
 
-public class Result {
+@Parcel public class Result {
 
   @SerializedName("category") @Expose private String category;
   @SerializedName("type") @Expose private String type;

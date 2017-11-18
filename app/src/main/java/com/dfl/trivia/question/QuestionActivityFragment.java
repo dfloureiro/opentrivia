@@ -10,10 +10,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
 import com.dfl.trivia.R;
+
+import org.parceler.Parcels;
+
 import java.util.List;
 
 /**
@@ -21,7 +26,7 @@ import java.util.List;
  */
 public class QuestionActivityFragment extends Fragment implements QuestionContract.View {
 
-  @BindView(R.id.categorie_title) TextView categorieTitle;
+  @BindView(R.id.categorie_title) TextView categoryTitle;
   @BindView(R.id.difficulty_title) TextView difficultyTitle;
   @BindView(R.id.question_text) TextView questionText;
   @BindView(R.id.multiple_type_layout) LinearLayout multipleTypeLayout;
@@ -47,12 +52,14 @@ public class QuestionActivityFragment extends Fragment implements QuestionContra
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_question, container, false);
     unbinder = ButterKnife.bind(this, view);
-    presenter.subscribe(null);
     return view;
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+
+    presenter.subscribe(savedInstanceState != null ? Parcels.unwrap(
+        savedInstanceState.getParcelable(QuestionState.QUESTION_STATE_KEY)) : null);
 
     View.OnClickListener buttonOnClickListener = v -> {
       multipleTypeLayout.setVisibility(View.GONE);
@@ -70,6 +77,11 @@ public class QuestionActivityFragment extends Fragment implements QuestionContra
     falseButton.setOnClickListener(buttonOnClickListener);
   }
 
+  @Override public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putParcelable(QuestionState.QUESTION_STATE_KEY, Parcels.wrap(presenter.getState()));
+  }
+
   @Override public void setPresenter(QuestionContract.Presenter presenter) {
     this.presenter = presenter;
   }
@@ -85,7 +97,7 @@ public class QuestionActivityFragment extends Fragment implements QuestionContra
   }
 
   @Override public void setCategoryTitle(String text) {
-    categorieTitle.setText(text);
+    categoryTitle.setText(text);
   }
 
   @Override public void setDifficultyTitle(String text) {

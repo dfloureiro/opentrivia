@@ -9,13 +9,10 @@ import com.dfl.trivia.networking.RequestFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-  //https://opentdb.com/api_config.php
-  //https://github.com/googlesamples/android-architecture/blob/todo-mvp/todoapp/app/src/main/java/com/example/android/architecture/blueprints/todoapp/addedittask/AddEditTaskActivity.java
-
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
     MainActivityFragment mainActivityFragment =

@@ -21,7 +21,7 @@ public class MainPresenter implements MainContract.Presenter {
 
   private ArrayList<Category> categoryArrayList;
 
-  public MainPresenter(MainContract.View view, RequestFactory requestFactory) {
+  MainPresenter(MainContract.View view, RequestFactory requestFactory) {
     this.view = view;
     this.requestFactory = requestFactory;
 

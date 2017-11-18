@@ -1,12 +1,15 @@
 package com.dfl.trivia.question;
 
 import android.util.Log;
+
 import com.dfl.trivia.data.questions.QuestionsResponse;
 import com.dfl.trivia.data.questions.Result;
 import com.dfl.trivia.networking.RequestFactory;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +32,7 @@ public class QuestionPresenter implements QuestionContract.Presenter {
   private int questionPosition;
   private int numberOfCorrectAnswers;
 
-  public QuestionPresenter(QuestionContract.View view, RequestFactory requestFactory, String token,
+  QuestionPresenter(QuestionContract.View view, RequestFactory requestFactory, String token,
       int amount, String categoryId, String difficulty, String questionType) {
     this.view = view;
     this.requestFactory = requestFactory;
@@ -49,13 +52,21 @@ public class QuestionPresenter implements QuestionContract.Presenter {
 
   @Override public void subscribe(QuestionContract.State state) {
     if (state != null) {
-
+      questionsList = state.getListOfQuestionResults();
+      questionPosition = state.getCurrentQuestionPosition();
+      numberOfCorrectAnswers = state.getNumberOfCorrectAnswers();
+      showCurrentQuestion();
+    } else {
+      getQuestionList();
     }
-    getQuestionList();
   }
 
   @Override public void unsubscribe() {
     compositeDisposable.clear();
+  }
+
+  @Override public QuestionContract.State getState() {
+    return new QuestionState(questionsList, questionPosition, numberOfCorrectAnswers);
   }
 
   private void getQuestionList() {
@@ -66,11 +77,11 @@ public class QuestionPresenter implements QuestionContract.Presenter {
             .map(QuestionsResponse::getResults)
             .subscribe(results -> {
               questionsList = results;
-              showNextQuestion();
+              showCurrentQuestion();
             }, error -> Log.e("Error", error.getMessage())));
   }
 
-  @Override public void showNextQuestion() {
+  @Override public void showCurrentQuestion() {
     if (questionPosition < questionsList.size()) {
       Result question = questionsList.get(questionPosition);
       view.setCategoryTitle(question.getCategory());
@@ -96,6 +107,6 @@ public class QuestionPresenter implements QuestionContract.Presenter {
           .getCorrectAnswer());
     }
     questionPosition++;
-    showNextQuestion();
+    showCurrentQuestion();
   }
 }

@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Loureiro on 13/11/2017.
  */
 
-public class NetworkModule {
+class NetworkModule {
 
   private final static String BASE_URL = "https://opentdb.com/";
 
@@ -26,7 +26,7 @@ public class NetworkModule {
     setRetrofit();
   }
 
-  public static NetworkModule newInstance() {
+  static NetworkModule newInstance() {
     if (instance == null) {
       instance = new NetworkModule();
     }
@@ -64,7 +64,7 @@ public class NetworkModule {
     return okHttpClientBuilder.build();
   }
 
-  public OpentdbApi getOpentdbApi() {
+  OpentdbApi getOpentdbApi() {
     return opentdbApi;
   }
 }

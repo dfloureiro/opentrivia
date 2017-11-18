@@ -3,6 +3,9 @@ package com.dfl.trivia.question;
 import com.dfl.trivia.base.BasePresenter;
 import com.dfl.trivia.base.BaseState;
 import com.dfl.trivia.base.BaseView;
+import com.dfl.trivia.data.questions.Result;
+import com.dfl.trivia.main.MainContract;
+
 import java.util.List;
 
 /**
@@ -27,12 +30,20 @@ public interface QuestionContract {
   }
 
   interface Presenter extends BasePresenter<State> {
-    void showNextQuestion();
+
+    State getState();
+
+    void showCurrentQuestion();
 
     void answerQuestion(String answer);
   }
 
   interface State extends BaseState {
 
+    List<Result> getListOfQuestionResults();
+
+    int getCurrentQuestionPosition();
+
+    int getNumberOfCorrectAnswers();
   }
 }
