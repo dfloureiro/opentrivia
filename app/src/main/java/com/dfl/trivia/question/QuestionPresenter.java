@@ -79,7 +79,8 @@ public class QuestionPresenter implements QuestionContract.Presenter {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap(questionsResponse -> {
-              if (questionsResponse.getResponseCode() == 0) {
+              if (questionsResponse.getResponseCode() == 0
+                  | questionsResponse.getResponseCode() == 1) {
                 return Flowable.just(questionsResponse);
               } else if (questionsResponse.getResponseCode() == 3) {
                 //session token does not exist
