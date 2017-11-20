@@ -12,4 +12,5 @@
   <string name="correct">Correct!</string>
   <string name="incorrect_message">Incorrect! The answer is </string>
   <string name="retry">Retry</string>
+  <string name="base_url">https://opentdb.com/</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.dfl.trivia.question;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -163,5 +165,10 @@ public class QuestionActivityFragment extends Fragment implements QuestionContra
     errorNoResultsLayout.setVisibility(View.GONE);
     loadingProgressBar.setVisibility(View.VISIBLE);
     presenter.subscribe(null);
+  }
+
+  @OnClick(R.id.help_add_questions_button) void onHeldAddQuestionButtonClick() {
+    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.base_url)));
+    startActivity(browserIntent);
   }
 }
