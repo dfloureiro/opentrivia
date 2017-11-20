@@ -1,15 +1,13 @@
 package com.dfl.trivia.question;
 
 import android.util.Log;
-
+import com.dfl.trivia.Base64Decoder;
 import com.dfl.trivia.data.questions.QuestionsResponse;
 import com.dfl.trivia.data.questions.Result;
 import com.dfl.trivia.networking.RequestFactory;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +54,7 @@ public class QuestionPresenter implements QuestionContract.Presenter {
       questionPosition = state.getCurrentQuestionPosition();
       numberOfCorrectAnswers = state.getNumberOfCorrectAnswers();
       showCurrentQuestion();
+      view.finishLoading();
     } else {
       getQuestionList();
     }
@@ -74,10 +73,12 @@ public class QuestionPresenter implements QuestionContract.Presenter {
         requestFactory.getQuestionsRequest(token, amount, categoryId, difficulty, questionType)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map(QuestionsResponse::getResults)
-            .subscribe(results -> {
-              questionsList = results;
+            //.map(questionsResponse -> Base64Decoder.decodeResults(questionsResponse.getResults()))
+            .filter(questionsResponse -> questionsResponse.getResponseCode() != 0)
+            .subscribe(questionsResponse -> {
+              questionsList = Base64Decoder.decodeResults(questionsResponse.getResults());
               showCurrentQuestion();
+              view.finishLoading();
             }, error -> Log.e("Error", error.getMessage())));
   }
 

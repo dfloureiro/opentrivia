@@ -3,6 +3,7 @@ package com.dfl.trivia.question;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import java.util.List;
  */
 public class QuestionActivityFragment extends Fragment implements QuestionContract.View {
 
+  @BindView(R.id.loading_spinner) ContentLoadingProgressBar loadingProgressBar;
   @BindView(R.id.categorie_title) TextView categoryTitle;
   @BindView(R.id.difficulty_title) TextView difficultyTitle;
   @BindView(R.id.question_text) TextView questionText;
@@ -130,5 +132,12 @@ public class QuestionActivityFragment extends Fragment implements QuestionContra
         "You got " + numberOfCorrectAnswers + " out of " + totalNumberOfAnswers, Toast.LENGTH_LONG)
         .show();
     getActivity().finish();
+  }
+
+  @Override public void finishLoading() {
+    categoryTitle.setVisibility(View.VISIBLE);
+    difficultyTitle.setVisibility(View.VISIBLE);
+    questionText.setVisibility(View.VISIBLE);
+    loadingProgressBar.setVisibility(View.GONE);
   }
 }

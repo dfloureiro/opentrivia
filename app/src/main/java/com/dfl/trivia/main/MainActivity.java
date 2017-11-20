@@ -1,7 +1,9 @@
 package com.dfl.trivia.main;
 
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import com.dfl.trivia.R;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
       transaction.commit();
     }
 
-    new MainPresenter(mainActivityFragment, new RequestFactory());
+    new MainPresenter(mainActivityFragment, new RequestFactory(),
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
   }
 }

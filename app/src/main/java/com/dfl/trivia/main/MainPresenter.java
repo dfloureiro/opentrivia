@@ -1,5 +1,6 @@
 package com.dfl.trivia.main;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 import com.dfl.trivia.main.model.Category;
 import com.dfl.trivia.networking.RequestFactory;
@@ -15,15 +16,17 @@ import java.util.ArrayList;
 
 public class MainPresenter implements MainContract.Presenter {
 
-  private final MainContract.View view;
+  private MainContract.View view;
   private RequestFactory requestFactory;
-  private CompositeDisposable compositeDisposable;
+  private SharedPreferences sharedPreferences;
 
+  private CompositeDisposable compositeDisposable;
   private ArrayList<Category> categoryArrayList;
 
-  MainPresenter(MainContract.View view, RequestFactory requestFactory) {
+  MainPresenter(MainContract.View view, RequestFactory requestFactory, SharedPreferences sharedPreferences) {
     this.view = view;
     this.requestFactory = requestFactory;
+    this.sharedPreferences = sharedPreferences;
 
     compositeDisposable = new CompositeDisposable();
     categoryArrayList = new ArrayList<>();
@@ -81,6 +84,8 @@ public class MainPresenter implements MainContract.Presenter {
   }
 
   private void saveSessionToken(String sessionToken) {
-    Log.d("TOKEN", sessionToken);
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putString("token", sessionToken);
+    editor.apply();
   }
 }

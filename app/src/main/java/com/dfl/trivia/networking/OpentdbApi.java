@@ -26,5 +26,6 @@ public interface OpentdbApi {
 
   @GET("api.php") Flowable<QuestionsResponse> getQuestions(@Query("token") String token,
       @Query("amount") int amount, @Query("category") String category,
-      @Query("difficulty") String difficulty, @Query("type") String questionType);
+      @Query("difficulty") String difficulty, @Query("type") String questionType,
+      @Query("encode") String encode);
 }

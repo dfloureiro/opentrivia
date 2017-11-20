@@ -40,6 +40,6 @@ public class RequestFactory {
       String difficulty, String questionType) {
     return NetworkModule.newInstance()
         .getOpentdbApi()
-        .getQuestions(token, amount, category, difficulty, questionType);
+        .getQuestions(token, amount, category, difficulty, questionType, "base64");
   }
 }

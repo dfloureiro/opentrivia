@@ -27,6 +27,8 @@ public interface QuestionContract {
     void showResponse(String correctAnswer);
 
     void showResults(int numberOfCorrectAnswers, int totalNumberOfAnswers);
+
+    void finishLoading();
   }
 
   interface Presenter extends BasePresenter<State> {

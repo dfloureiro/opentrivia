@@ -1,7 +1,9 @@
 package com.dfl.trivia.question;
 
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import com.dfl.trivia.R;
@@ -30,7 +32,8 @@ public class QuestionActivity extends AppCompatActivity {
       transaction.commit();
     }
 
-    String token = null;
+    String token = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+        .getString("token", "");
     int amount = getIntent().getIntExtra(AMOUNT, 10);
     String categoryId = getIntent().getStringExtra(CATEGORY_ID);
     String difficulty = getIntent().getStringExtra(DIFFICULTY);
