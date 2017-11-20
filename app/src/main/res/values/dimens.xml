@@ -1,3 +1,5 @@
 <resources>
   <dimen name="fab_margin">16dp</dimen>
+  <dimen name="answers_button_margin">10dp</dimen>
+  <dimen name="layout_margin">10dp</dimen>
 </resources>

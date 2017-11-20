@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/answers_button_margin"
     tools:context="com.dfl.trivia.main.MainActivityFragment"
     >
 

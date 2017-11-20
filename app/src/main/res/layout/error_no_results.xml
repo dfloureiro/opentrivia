@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/answers_button_margin"
     >
 
   <ImageView
@@ -22,6 +23,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/sorry_not_enough_questions"
+      android:textAlignment="center"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/error_invalid_image"
