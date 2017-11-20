@@ -2,7 +2,6 @@ package com.dfl.trivia.question;
 
 import android.util.Log;
 import com.dfl.trivia.Base64Decoder;
-import com.dfl.trivia.data.questions.QuestionsResponse;
 import com.dfl.trivia.data.questions.Result;
 import com.dfl.trivia.networking.RequestFactory;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -73,8 +72,7 @@ public class QuestionPresenter implements QuestionContract.Presenter {
         requestFactory.getQuestionsRequest(token, amount, categoryId, difficulty, questionType)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            //.map(questionsResponse -> Base64Decoder.decodeResults(questionsResponse.getResults()))
-            .filter(questionsResponse -> questionsResponse.getResponseCode() != 0)
+            .filter(questionsResponse -> questionsResponse.getResponseCode() == 0)
             .subscribe(questionsResponse -> {
               questionsList = Base64Decoder.decodeResults(questionsResponse.getResults());
               showCurrentQuestion();
