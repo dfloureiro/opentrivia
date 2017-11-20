@@ -156,6 +156,8 @@ public class MainActivityFragment extends Fragment implements MainContract.View 
   }
 
   @OnClick(R.id.error_retry_button) void onErrorRetryButtonClick() {
+    invalidParameterLayout.setVisibility(View.GONE);
+    loadingProgressBar.setVisibility(View.VISIBLE);
     presenter.subscribe(null);
   }
 }

@@ -159,6 +159,9 @@ public class QuestionActivityFragment extends Fragment implements QuestionContra
   }
 
   @OnClick(R.id.error_retry_button) void onErrorRetryButtonClick() {
+    errorInvalidParameterLayout.setVisibility(View.GONE);
+    errorNoResultsLayout.setVisibility(View.GONE);
+    loadingProgressBar.setVisibility(View.VISIBLE);
     presenter.subscribe(null);
   }
 }
