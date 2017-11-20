@@ -8,7 +8,7 @@
   <string name="false_answer">False</string>
   <string name="true_answer">True</string>
   <string name="you_got">You got</string>
-  <string name="out_of">out of</string>
+  <string name="out_of"> out of </string>
   <string name="correct">Correct!</string>
-  <string name="incorrect_message">Incorrect! The answer is</string>
+  <string name="incorrect_message">Incorrect! The answer is </string>
 </resources>
