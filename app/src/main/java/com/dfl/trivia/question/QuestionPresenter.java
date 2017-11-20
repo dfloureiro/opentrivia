@@ -54,14 +54,17 @@ public class QuestionPresenter implements QuestionContract.Presenter {
 
   @Override public void subscribe(QuestionContract.State state) {
     if (state != null) {
-      questionsList = state.getListOfQuestionResults();
-      questionPosition = state.getCurrentQuestionPosition();
-      numberOfCorrectAnswers = state.getNumberOfCorrectAnswers();
-      showCurrentQuestion();
-      view.finishLoading(false, false);
-    } else {
-      getQuestionList();
+      if (!state.getListOfQuestionResults()
+          .isEmpty()) {
+        questionsList = state.getListOfQuestionResults();
+        questionPosition = state.getCurrentQuestionPosition();
+        numberOfCorrectAnswers = state.getNumberOfCorrectAnswers();
+        showCurrentQuestion();
+        view.finishLoading(false, false);
+        return;
+      }
     }
+    getQuestionList();
   }
 
   @Override public void unsubscribe() {
