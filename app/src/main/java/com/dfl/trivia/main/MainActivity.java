@@ -1,12 +1,12 @@
 package com.dfl.trivia.main;
 
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import com.dfl.trivia.R;
+import com.dfl.trivia.TriviaSharedPreferences;
 import com.dfl.trivia.networking.RequestFactory;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
       transaction.commit();
     }
 
-    new MainPresenter(mainActivityFragment, new RequestFactory(),
+    RequestFactory requestFactory = new RequestFactory();
+    TriviaSharedPreferences triviaSharedPreferences = new TriviaSharedPreferences(
         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+
+    new MainPresenter(mainActivityFragment, requestFactory, triviaSharedPreferences);
   }
 }

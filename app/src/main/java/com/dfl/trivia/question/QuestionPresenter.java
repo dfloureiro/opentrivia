@@ -2,8 +2,10 @@ package com.dfl.trivia.question;
 
 import android.util.Log;
 import com.dfl.trivia.Base64Decoder;
+import com.dfl.trivia.TriviaSharedPreferences;
 import com.dfl.trivia.data.questions.Result;
 import com.dfl.trivia.networking.RequestFactory;
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -18,27 +20,30 @@ public class QuestionPresenter implements QuestionContract.Presenter {
 
   private final QuestionContract.View view;
   private RequestFactory requestFactory;
-  private final String token;
+  private TriviaSharedPreferences triviaSharedPreferences;
   private final int amount;
   private final String categoryId;
   private final String difficulty;
   private final String questionType;
   private CompositeDisposable compositeDisposable;
 
+  private String sessionToken;
   private List<Result> questionsList;
   private int questionPosition;
   private int numberOfCorrectAnswers;
 
-  QuestionPresenter(QuestionContract.View view, RequestFactory requestFactory, String token,
-      int amount, String categoryId, String difficulty, String questionType) {
+  QuestionPresenter(QuestionContract.View view, RequestFactory requestFactory,
+      TriviaSharedPreferences triviaSharedPreferences, int amount, String categoryId,
+      String difficulty, String questionType) {
     this.view = view;
     this.requestFactory = requestFactory;
-    this.token = token;
+    this.triviaSharedPreferences = triviaSharedPreferences;
     this.amount = amount;
     this.categoryId = categoryId;
     this.difficulty = difficulty;
     this.questionType = questionType;
 
+    sessionToken = triviaSharedPreferences.getSessionToken();
     questionsList = new ArrayList<>();
     questionPosition = 0;
     numberOfCorrectAnswers = 0;
@@ -69,10 +74,26 @@ public class QuestionPresenter implements QuestionContract.Presenter {
 
   private void getQuestionList() {
     compositeDisposable.add(
-        requestFactory.getQuestionsRequest(token, amount, categoryId, difficulty, questionType)
+        requestFactory.getQuestionsRequest(sessionToken, amount, categoryId, difficulty,
+            questionType)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .filter(questionsResponse -> questionsResponse.getResponseCode() == 0)
+            .flatMap(questionsResponse -> {
+              if (questionsResponse.getResponseCode() != 0) {
+                return requestFactory.resetSessionTokenRequest(sessionToken)
+                    .flatMap(resetSessionTokenResponse -> {
+                      triviaSharedPreferences.saveSessionToken(
+                          resetSessionTokenResponse.getToken());
+                      return requestFactory.getQuestionsRequest(
+                          resetSessionTokenResponse.getToken(), amount, categoryId, difficulty,
+                          questionType);
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
+              } else {
+                return Flowable.just(questionsResponse);
+              }
+            })
             .subscribe(questionsResponse -> {
               questionsList = Base64Decoder.decodeResults(questionsResponse.getResults());
               showCurrentQuestion();

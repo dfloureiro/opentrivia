@@ -1,7 +1,7 @@
 package com.dfl.trivia.main;
 
-import android.content.SharedPreferences;
 import android.util.Log;
+import com.dfl.trivia.TriviaSharedPreferences;
 import com.dfl.trivia.main.model.Category;
 import com.dfl.trivia.networking.RequestFactory;
 import io.reactivex.Flowable;
@@ -18,15 +18,16 @@ public class MainPresenter implements MainContract.Presenter {
 
   private MainContract.View view;
   private RequestFactory requestFactory;
-  private SharedPreferences sharedPreferences;
+  private TriviaSharedPreferences triviaSharedPreferences;
 
   private CompositeDisposable compositeDisposable;
   private ArrayList<Category> categoryArrayList;
 
-  MainPresenter(MainContract.View view, RequestFactory requestFactory, SharedPreferences sharedPreferences) {
+  MainPresenter(MainContract.View view, RequestFactory requestFactory,
+      TriviaSharedPreferences triviaSharedPreferences) {
     this.view = view;
     this.requestFactory = requestFactory;
-    this.sharedPreferences = sharedPreferences;
+    this.triviaSharedPreferences = triviaSharedPreferences;
 
     compositeDisposable = new CompositeDisposable();
     categoryArrayList = new ArrayList<>();
@@ -45,7 +46,10 @@ public class MainPresenter implements MainContract.Presenter {
       }
     }
     getTriviaCategoryList();
-    getSessionToken();
+    if (triviaSharedPreferences.getSessionToken()
+        .isEmpty()) {
+      getSessionToken();
+    }
   }
 
   @Override public void unsubscribe() {
@@ -60,8 +64,8 @@ public class MainPresenter implements MainContract.Presenter {
     compositeDisposable.add(requestFactory.getSessionTokenRequest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(sessionTokenResponse -> saveSessionToken(sessionTokenResponse.getToken()),
-            error -> Log.e("Error", error.getMessage())));
+        .subscribe(sessionTokenResponse -> triviaSharedPreferences.saveSessionToken(
+            sessionTokenResponse.getToken()), error -> Log.e("Error", error.getMessage())));
   }
 
   @Override public void getTriviaCategoryList() {
@@ -81,11 +85,5 @@ public class MainPresenter implements MainContract.Presenter {
   @Override public String getSelectedCategoryId(int position) {
     return String.valueOf(categoryArrayList.get(position)
         .getId());
-  }
-
-  private void saveSessionToken(String sessionToken) {
-    SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.putString("token", sessionToken);
-    editor.apply();
   }
 }

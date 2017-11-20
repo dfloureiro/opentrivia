@@ -1,12 +1,12 @@
 package com.dfl.trivia.question;
 
 import android.app.FragmentTransaction;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import com.dfl.trivia.R;
+import com.dfl.trivia.TriviaSharedPreferences;
 import com.dfl.trivia.networking.RequestFactory;
 
 public class QuestionActivity extends AppCompatActivity {
@@ -32,14 +32,15 @@ public class QuestionActivity extends AppCompatActivity {
       transaction.commit();
     }
 
-    String token = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-        .getString("token", "");
+    RequestFactory requestFactory = new RequestFactory();
+    TriviaSharedPreferences triviaSharedPreferences = new TriviaSharedPreferences(
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
     int amount = getIntent().getIntExtra(AMOUNT, 10);
     String categoryId = getIntent().getStringExtra(CATEGORY_ID);
     String difficulty = getIntent().getStringExtra(DIFFICULTY);
     String questionType = getIntent().getStringExtra(GAME_TYPE);
 
-    new QuestionPresenter(mainActivityFragment, new RequestFactory(), token, amount, categoryId,
-        difficulty, questionType);
+    new QuestionPresenter(mainActivityFragment, requestFactory, triviaSharedPreferences, amount,
+        categoryId, difficulty, questionType);
   }
 }
