@@ -47,7 +47,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@android:color/holo_red_light"
-        android:text="FALSE"
+        android:text="@string/false_answer"
         style="?android:attr/borderlessButtonStyle"
         />
     <Button
@@ -56,7 +56,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@android:color/holo_green_light"
-        android:text="TRUE"
+        android:text="@string/true_answer"
         style="?android:attr/borderlessButtonStyle"
         />
   </LinearLayout>

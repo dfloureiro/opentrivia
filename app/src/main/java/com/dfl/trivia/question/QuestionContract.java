@@ -22,7 +22,9 @@ public interface QuestionContract {
 
     void setAnswers(boolean isMultiple, List<String> answers);
 
-    void showResponse(String correctAnswer);
+    void showResponseCorrect();
+
+    void showResponseIncorrect(String correctAnswer);
 
     void showResults(int numberOfCorrectAnswers, int totalNumberOfAnswers);
 

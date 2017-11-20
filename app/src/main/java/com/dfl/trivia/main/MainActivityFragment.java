@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ public class MainActivityFragment extends Fragment implements MainContract.View 
   @BindView(R.id.gametypes_spinner) Spinner gameTypesSpinner;
   @BindView(R.id.amounts_spinner) Spinner amountsSpinner;
   @BindView(R.id.start_button) Button startButton;
+  @BindView(R.id.error_invalid_parameter_layout) ConstraintLayout invalidParameterLayout;
 
   private Unbinder unbinder;
   private MainContract.Presenter presenter;
@@ -139,12 +141,16 @@ public class MainActivityFragment extends Fragment implements MainContract.View 
     categorySpinnerAdapter.notifyDataSetChanged();
   }
 
-  @Override public void finishLoading() {
-    categoriesSpinner.setVisibility(View.VISIBLE);
-    difficultiesSpinner.setVisibility(View.VISIBLE);
-    gameTypesSpinner.setVisibility(View.VISIBLE);
-    amountsSpinner.setVisibility(View.VISIBLE);
-    startButton.setVisibility(View.VISIBLE);
+  @Override public void finishLoading(boolean hasError) {
+    if (hasError) {
+      invalidParameterLayout.setVisibility(View.VISIBLE);
+    } else {
+      categoriesSpinner.setVisibility(View.VISIBLE);
+      difficultiesSpinner.setVisibility(View.VISIBLE);
+      gameTypesSpinner.setVisibility(View.VISIBLE);
+      amountsSpinner.setVisibility(View.VISIBLE);
+      startButton.setVisibility(View.VISIBLE);
+    }
     loadingProgressBar.setVisibility(View.GONE);
   }
 }

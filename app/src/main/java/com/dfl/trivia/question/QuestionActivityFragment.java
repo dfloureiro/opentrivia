@@ -2,6 +2,7 @@ package com.dfl.trivia.question;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.ContentLoadingProgressBar;
@@ -83,7 +84,7 @@ public class QuestionActivityFragment extends Fragment implements QuestionContra
     outState.putParcelable(QuestionState.QUESTION_STATE_KEY, Parcels.wrap(presenter.getState()));
   }
 
-  @Override public void setPresenter(QuestionContract.Presenter presenter) {
+  @Override public void setPresenter(@NonNull QuestionContract.Presenter presenter) {
     this.presenter = presenter;
   }
 
@@ -121,14 +122,22 @@ public class QuestionActivityFragment extends Fragment implements QuestionContra
     }
   }
 
-  @Override public void showResponse(String correctAnswer) {
-    Toast.makeText(getActivity(), correctAnswer, Toast.LENGTH_SHORT)
+  @Override public void showResponseCorrect() {
+    Toast.makeText(getActivity(), R.string.correct, Toast.LENGTH_SHORT)
+        .show();
+  }
+
+  @Override public void showResponseIncorrect(String correctAnswer) {
+    Toast.makeText(getActivity(), getString(R.string.incorrect_message) + correctAnswer,
+        Toast.LENGTH_SHORT)
         .show();
   }
 
   @Override public void showResults(int numberOfCorrectAnswers, int totalNumberOfAnswers) {
-    Toast.makeText(getActivity(),
-        "You got " + numberOfCorrectAnswers + " out of " + totalNumberOfAnswers, Toast.LENGTH_LONG)
+    Toast.makeText(getActivity(), getString(R.string.you_got)
+        + numberOfCorrectAnswers
+        + getString(R.string.out_of)
+        + totalNumberOfAnswers, Toast.LENGTH_LONG)
         .show();
     getActivity().finish();
   }

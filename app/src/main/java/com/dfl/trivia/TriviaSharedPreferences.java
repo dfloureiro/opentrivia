@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 
 public class TriviaSharedPreferences {
 
+  private final static String SESSION_TOKEN_KEY = "SESSION_TOKEN_KEY";
+
   private SharedPreferences sharedPreferences;
 
   public TriviaSharedPreferences(SharedPreferences sharedPreferences) {
@@ -16,11 +18,11 @@ public class TriviaSharedPreferences {
 
   public void saveSessionToken(String sessionToken) {
     SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.putString("token", sessionToken);
+    editor.putString(SESSION_TOKEN_KEY, sessionToken);
     editor.apply();
   }
 
   public String getSessionToken() {
-    return sharedPreferences.getString("token", "");
+    return sharedPreferences.getString(SESSION_TOKEN_KEY, "");
   }
 }

@@ -16,10 +16,12 @@ public class QuestionActivity extends AppCompatActivity {
   public final static String GAME_TYPE = "GAME_TYPE";
   public final static String AMOUNT = "AMOUNT";
 
+  private final static int DEFAULT_AMOUNT_OF_QUESTIONS = 10;
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_question);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
     QuestionActivityFragment mainActivityFragment =
@@ -35,7 +37,7 @@ public class QuestionActivity extends AppCompatActivity {
     RequestFactory requestFactory = new RequestFactory();
     TriviaSharedPreferences triviaSharedPreferences = new TriviaSharedPreferences(
         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
-    int amount = getIntent().getIntExtra(AMOUNT, 10);
+    int amount = getIntent().getIntExtra(AMOUNT, DEFAULT_AMOUNT_OF_QUESTIONS);
     String categoryId = getIntent().getStringExtra(CATEGORY_ID);
     String difficulty = getIntent().getStringExtra(DIFFICULTY);
     String questionType = getIntent().getStringExtra(GAME_TYPE);

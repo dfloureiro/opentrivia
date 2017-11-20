@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class MainPresenter implements MainContract.Presenter {
 
+  private final static String TAG = MainPresenter.class.getCanonicalName();
+
   private MainContract.View view;
   private RequestFactory requestFactory;
   private TriviaSharedPreferences triviaSharedPreferences;
@@ -41,7 +43,7 @@ public class MainPresenter implements MainContract.Presenter {
         for (Category category : categoryArrayList) {
           view.ShowCategory(category);
         }
-        view.finishLoading();
+        view.finishLoading(false);
         return;
       }
     }
@@ -65,7 +67,7 @@ public class MainPresenter implements MainContract.Presenter {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(sessionTokenResponse -> triviaSharedPreferences.saveSessionToken(
-            sessionTokenResponse.getToken()), error -> Log.e("Error", error.getMessage())));
+            sessionTokenResponse.getToken()), error -> Log.e(TAG, error.getMessage())));
   }
 
   @Override public void getTriviaCategoryList() {
@@ -76,10 +78,13 @@ public class MainPresenter implements MainContract.Presenter {
             triviaCategoryList -> Flowable.fromIterable(triviaCategoryList.getTriviaCategories()))
         .map(triviaCategory -> new Category(triviaCategory.getId(), triviaCategory.getName()))
         .subscribe(category -> {
-          view.finishLoading();
+          view.finishLoading(false);
           categoryArrayList.add(category);
           view.ShowCategory(category);
-        }, error -> Log.e("Error", error.getMessage())));
+        }, error -> {
+          view.finishLoading(true);
+          Log.e(TAG, error.getMessage());
+        }));
   }
 
   @Override public String getSelectedCategoryId(int position) {

@@ -18,6 +18,9 @@ import java.util.List;
 
 public class QuestionPresenter implements QuestionContract.Presenter {
 
+  private final static String TAG = QuestionPresenter.class.getCanonicalName();
+  private final static String MULTIPLE_GAME_TYPE = "multiple";
+
   private final QuestionContract.View view;
   private RequestFactory requestFactory;
   private TriviaSharedPreferences triviaSharedPreferences;
@@ -110,7 +113,7 @@ public class QuestionPresenter implements QuestionContract.Presenter {
               } else {
                 return Flowable.error(new IllegalArgumentException("error "
                     + questionsResponse.getResponseCode()
-                    + ": Illegal parameter or unknown error occured"));
+                    + ": Illegal parameter or unknown error occurred"));
               }
             })
             .subscribe(questionsResponse -> {
@@ -123,7 +126,7 @@ public class QuestionPresenter implements QuestionContract.Presenter {
                 view.finishLoading(false, true);
               }
             }, error -> {
-              Log.e("Error", error.getMessage());
+              Log.e(TAG, error.getMessage());
               view.finishLoading(true, false);
             }));
   }
@@ -137,7 +140,7 @@ public class QuestionPresenter implements QuestionContract.Presenter {
       List<String> answersList = question.getIncorrectAnswers();
       answersList.add(question.getCorrectAnswer());
       view.setAnswers(question.getType()
-          .equals("multiple"), answersList);
+          .equals(MULTIPLE_GAME_TYPE), answersList);
     } else {
       view.showResults(numberOfCorrectAnswers, questionsList.size());
     }
@@ -147,10 +150,10 @@ public class QuestionPresenter implements QuestionContract.Presenter {
     if (questionsList.get(questionPosition)
         .getCorrectAnswer()
         .equalsIgnoreCase(answer)) {
-      view.showResponse("Correct!");
+      view.showResponseCorrect();
       numberOfCorrectAnswers++;
     } else {
-      view.showResponse("Incorrect! The answer is " + questionsList.get(questionPosition)
+      view.showResponseIncorrect(questionsList.get(questionPosition)
           .getCorrectAnswer());
     }
     questionPosition++;

@@ -12,6 +12,8 @@ import java.util.List;
 
 public class Base64Decoder {
 
+  private static final String CHARSET_NAME_TYPE = "UTF-8";
+
   public static List<Result> decodeResults(List<Result> results)
       throws UnsupportedEncodingException {
     ArrayList<Result> resultList = new ArrayList<>();
@@ -33,6 +35,6 @@ public class Base64Decoder {
 
   private static String decodeString(String base64) throws UnsupportedEncodingException {
     byte[] data = Base64.decode(base64, Base64.DEFAULT);
-    return new String(data, "UTF-8");
+    return new String(data, CHARSET_NAME_TYPE);
   }
 }

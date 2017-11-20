@@ -4,7 +4,6 @@ import com.dfl.trivia.data.category.TriviaCategoryList;
 import com.dfl.trivia.data.questions.QuestionsResponse;
 import com.dfl.trivia.data.token.ResetSessionTokenResponse;
 import com.dfl.trivia.data.token.SessionTokenResponse;
-import com.dfl.trivia.enums.Command;
 import io.reactivex.Flowable;
 
 /**
@@ -12,6 +11,10 @@ import io.reactivex.Flowable;
  */
 
 public class RequestFactory {
+
+  private static final String ENCODE = "base64";
+  private static final String COMMAND_REQUEST = "request";
+  private static final String COMMAND_RESET = "reset";
 
   public RequestFactory() {
   }
@@ -25,21 +28,19 @@ public class RequestFactory {
   public Flowable<SessionTokenResponse> getSessionTokenRequest() {
     return NetworkModule.newInstance()
         .getOpentdbApi()
-        .getSessionToken(Command.REQUEST.toString()
-            .toLowerCase());
+        .getSessionToken(COMMAND_REQUEST);
   }
 
   public Flowable<ResetSessionTokenResponse> resetSessionTokenRequest(String sessionToken) {
     return NetworkModule.newInstance()
         .getOpentdbApi()
-        .resetSessionToken(Command.RESET.toString()
-            .toLowerCase(), sessionToken);
+        .resetSessionToken(COMMAND_RESET, sessionToken);
   }
 
   public Flowable<QuestionsResponse> getQuestionsRequest(String token, int amount, String category,
       String difficulty, String questionType) {
     return NetworkModule.newInstance()
         .getOpentdbApi()
-        .getQuestions(token, amount, category, difficulty, questionType, "base64");
+        .getQuestions(token, amount, category, difficulty, questionType, ENCODE);
   }
 }

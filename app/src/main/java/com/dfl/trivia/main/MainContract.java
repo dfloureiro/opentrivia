@@ -16,7 +16,7 @@ public interface MainContract {
 
     void ShowCategory(Category category);
 
-    void finishLoading();
+    void finishLoading(boolean hasError);
   }
 
   interface Presenter extends BasePresenter<State> {
