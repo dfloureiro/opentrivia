@@ -3,6 +3,7 @@ package com.dfl.trivia.question;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +12,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
 import com.dfl.trivia.R;
-
-import org.parceler.Parcels;
-
 import java.util.List;
+import org.parceler.Parcels;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -39,6 +36,8 @@ public class QuestionActivityFragment extends Fragment implements QuestionContra
   @BindView(R.id.boolean_type_layout) LinearLayout booleanTypeLayout;
   @BindView(R.id.true_button) Button trueButton;
   @BindView(R.id.false_button) Button falseButton;
+  @BindView(R.id.error_invalid_parameter_layout) ConstraintLayout errorInvalidParameterLayout;
+  @BindView(R.id.error_no_results_layout) ConstraintLayout errorNoResultsLayout;
 
   private Unbinder unbinder;
   private QuestionContract.Presenter presenter;
@@ -134,10 +133,17 @@ public class QuestionActivityFragment extends Fragment implements QuestionContra
     getActivity().finish();
   }
 
-  @Override public void finishLoading() {
-    categoryTitle.setVisibility(View.VISIBLE);
-    difficultyTitle.setVisibility(View.VISIBLE);
-    questionText.setVisibility(View.VISIBLE);
+  @Override public void finishLoading(boolean hasError, boolean noResults) {
+    if (hasError) {
+      errorInvalidParameterLayout.setVisibility(View.VISIBLE);
+    } else if (noResults) {
+      errorNoResultsLayout.setVisibility(View.VISIBLE);
+    } else {
+      categoryTitle.setVisibility(View.VISIBLE);
+      difficultyTitle.setVisibility(View.VISIBLE);
+      questionText.setVisibility(View.VISIBLE);
+      errorInvalidParameterLayout.setVisibility(View.GONE);
+    }
     loadingProgressBar.setVisibility(View.GONE);
   }
 }

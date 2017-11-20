@@ -111,4 +111,23 @@
       tools:visibility="gone"
       style="?android:attr/progressBarStyleLarge"
       />
+
+  <include
+      layout="@layout/error_invalid_parameter"
+      android:id="@+id/error_invalid_parameter_layout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="gone"
+      >
+  </include>
+
+  <include
+      layout="@layout/error_no_results"
+      android:id="@+id/error_no_results_layout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="gone"
+      >
+  </include>
+
 </RelativeLayout>

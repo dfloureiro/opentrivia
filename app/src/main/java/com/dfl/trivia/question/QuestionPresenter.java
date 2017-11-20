@@ -58,7 +58,7 @@ public class QuestionPresenter implements QuestionContract.Presenter {
       questionPosition = state.getCurrentQuestionPosition();
       numberOfCorrectAnswers = state.getNumberOfCorrectAnswers();
       showCurrentQuestion();
-      view.finishLoading();
+      view.finishLoading(false, false);
     } else {
       getQuestionList();
     }
@@ -79,7 +79,20 @@ public class QuestionPresenter implements QuestionContract.Presenter {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap(questionsResponse -> {
-              if (questionsResponse.getResponseCode() != 0) {
+              if (questionsResponse.getResponseCode() == 0) {
+                return Flowable.just(questionsResponse);
+              } else if (questionsResponse.getResponseCode() == 3) {
+                //session token does not exist
+                return requestFactory.getSessionTokenRequest()
+                    .flatMap(getSessionTokenResponse -> {
+                      triviaSharedPreferences.saveSessionToken(getSessionTokenResponse.getToken());
+                      return requestFactory.getQuestionsRequest(getSessionTokenResponse.getToken(),
+                          amount, categoryId, difficulty, questionType);
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread());
+              } else if (questionsResponse.getResponseCode() == 4) {
+                //reset session token
                 return requestFactory.resetSessionTokenRequest(sessionToken)
                     .flatMap(resetSessionTokenResponse -> {
                       triviaSharedPreferences.saveSessionToken(
@@ -91,14 +104,24 @@ public class QuestionPresenter implements QuestionContract.Presenter {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
               } else {
-                return Flowable.just(questionsResponse);
+                return Flowable.error(new IllegalArgumentException("error "
+                    + questionsResponse.getResponseCode()
+                    + ": Illegal parameter or unknown error occured"));
               }
             })
             .subscribe(questionsResponse -> {
-              questionsList = Base64Decoder.decodeResults(questionsResponse.getResults());
-              showCurrentQuestion();
-              view.finishLoading();
-            }, error -> Log.e("Error", error.getMessage())));
+              if (!questionsResponse.getResults()
+                  .isEmpty()) {
+                questionsList = Base64Decoder.decodeResults(questionsResponse.getResults());
+                showCurrentQuestion();
+                view.finishLoading(false, false);
+              } else {
+                view.finishLoading(false, true);
+              }
+            }, error -> {
+              Log.e("Error", error.getMessage());
+              view.finishLoading(true, false);
+            }));
   }
 
   @Override public void showCurrentQuestion() {

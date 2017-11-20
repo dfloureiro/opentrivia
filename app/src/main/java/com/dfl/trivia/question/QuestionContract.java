@@ -4,8 +4,6 @@ import com.dfl.trivia.base.BasePresenter;
 import com.dfl.trivia.base.BaseState;
 import com.dfl.trivia.base.BaseView;
 import com.dfl.trivia.data.questions.Result;
-import com.dfl.trivia.main.MainContract;
-
 import java.util.List;
 
 /**
@@ -28,7 +26,7 @@ public interface QuestionContract {
 
     void showResults(int numberOfCorrectAnswers, int totalNumberOfAnswers);
 
-    void finishLoading();
+    void finishLoading(boolean hasError, boolean noResults);
   }
 
   interface Presenter extends BasePresenter<State> {
