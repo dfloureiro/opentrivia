@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import com.dfl.trivia.R;
 import java.util.List;
@@ -152,7 +153,12 @@ public class QuestionActivityFragment extends Fragment implements QuestionContra
       difficultyTitle.setVisibility(View.VISIBLE);
       questionText.setVisibility(View.VISIBLE);
       errorInvalidParameterLayout.setVisibility(View.GONE);
+      errorNoResultsLayout.setVisibility(View.GONE);
     }
     loadingProgressBar.setVisibility(View.GONE);
+  }
+
+  @OnClick(R.id.error_retry_button) void onErrorRetryButtonClick() {
+    presenter.subscribe(null);
   }
 }

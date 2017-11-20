@@ -123,19 +123,6 @@ public class MainActivityFragment extends Fragment implements MainContract.View 
     this.presenter = presenter;
   }
 
-  @OnClick(R.id.start_button) void startButtonClick() {
-    Intent intent = new Intent(getActivity(), QuestionActivity.class);
-    intent.putExtra(QuestionActivity.CATEGORY_ID,
-        presenter.getSelectedCategoryId(categoriesSpinner.getSelectedItemPosition()));
-    intent.putExtra(QuestionActivity.DIFFICULTY,
-        difficultiesValues[difficultiesSpinner.getSelectedItemPosition()]);
-    intent.putExtra(QuestionActivity.GAME_TYPE,
-        gameTypesValues[gameTypesSpinner.getSelectedItemPosition()]);
-    intent.putExtra(QuestionActivity.AMOUNT,
-        amountsValues[amountsSpinner.getSelectedItemPosition()]);
-    startActivity(intent);
-  }
-
   @Override public void ShowCategory(Category category) {
     categorySpinnerAdapter.add(category.getName());
     categorySpinnerAdapter.notifyDataSetChanged();
@@ -150,7 +137,25 @@ public class MainActivityFragment extends Fragment implements MainContract.View 
       gameTypesSpinner.setVisibility(View.VISIBLE);
       amountsSpinner.setVisibility(View.VISIBLE);
       startButton.setVisibility(View.VISIBLE);
+      invalidParameterLayout.setVisibility(View.GONE);
     }
     loadingProgressBar.setVisibility(View.GONE);
+  }
+
+  @OnClick(R.id.start_button) void startButtonClick() {
+    Intent intent = new Intent(getActivity(), QuestionActivity.class);
+    intent.putExtra(QuestionActivity.CATEGORY_ID,
+        presenter.getSelectedCategoryId(categoriesSpinner.getSelectedItemPosition()));
+    intent.putExtra(QuestionActivity.DIFFICULTY,
+        difficultiesValues[difficultiesSpinner.getSelectedItemPosition()]);
+    intent.putExtra(QuestionActivity.GAME_TYPE,
+        gameTypesValues[gameTypesSpinner.getSelectedItemPosition()]);
+    intent.putExtra(QuestionActivity.AMOUNT,
+        amountsValues[amountsSpinner.getSelectedItemPosition()]);
+    startActivity(intent);
+  }
+
+  @OnClick(R.id.error_retry_button) void onErrorRetryButtonClick() {
+    presenter.subscribe(null);
   }
 }

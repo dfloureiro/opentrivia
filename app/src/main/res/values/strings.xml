@@ -11,4 +11,5 @@
   <string name="out_of"> out of </string>
   <string name="correct">Correct!</string>
   <string name="incorrect_message">Incorrect! The answer is </string>
+  <string name="retry">Retry</string>
 </resources>
