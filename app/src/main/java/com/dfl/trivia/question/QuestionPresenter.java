@@ -138,7 +138,8 @@ public class QuestionPresenter implements QuestionContract.Presenter {
       view.setCategoryTitle(question.getCategory());
       view.setDifficultyTitle(question.getDifficulty());
       view.setQuestionText(question.getQuestion());
-      List<String> answersList = question.getIncorrectAnswers();
+      List<String> answersList = new ArrayList<>();
+      answersList.addAll(question.getIncorrectAnswers());
       answersList.add(question.getCorrectAnswer());
       Collections.shuffle(answersList);
       view.setAnswers(question.getType()
