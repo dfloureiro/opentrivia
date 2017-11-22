@@ -10,6 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -139,6 +140,7 @@ public class QuestionPresenter implements QuestionContract.Presenter {
       view.setQuestionText(question.getQuestion());
       List<String> answersList = question.getIncorrectAnswers();
       answersList.add(question.getCorrectAnswer());
+      Collections.shuffle(answersList);
       view.setAnswers(question.getType()
           .equals(MULTIPLE_GAME_TYPE), answersList);
     } else {
