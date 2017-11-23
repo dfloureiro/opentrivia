@@ -8,6 +8,8 @@ import io.reactivex.Flowable;
 
 /**
  * Created by Loureiro on 13/11/2017.
+ *
+ * list of request to do on the network to the API
  */
 
 public class RequestFactory {
@@ -19,24 +21,50 @@ public class RequestFactory {
   public RequestFactory() {
   }
 
+  /**
+   * get the list of categories
+   *
+   * @return list of categories request flowable
+   */
   public Flowable<TriviaCategoryList> getTriviaCategoryListRequest() {
     return NetworkModule.newInstance()
         .getOpentdbApi()
         .getTriviaCategoryList();
   }
 
+  /**
+   * get a new session token
+   *
+   * @return session token request flowable
+   */
   public Flowable<SessionTokenResponse> getSessionTokenRequest() {
     return NetworkModule.newInstance()
         .getOpentdbApi()
         .getSessionToken(COMMAND_REQUEST);
   }
 
+  /**
+   * reset the current session token
+   *
+   * @param sessionToken current session token
+   *
+   * @return reseted token request flowable
+   */
   public Flowable<ResetSessionTokenResponse> resetSessionTokenRequest(String sessionToken) {
     return NetworkModule.newInstance()
         .getOpentdbApi()
         .resetSessionToken(COMMAND_RESET, sessionToken);
   }
 
+  /**
+   * @param token session token
+   * @param amount amount of questions
+   * @param category questions category
+   * @param difficulty questions difficulty
+   * @param questionType questions game type
+   *
+   * @return list of questions request flowable
+   */
   public Flowable<QuestionsResponse> getQuestionsRequest(String token, int amount, String category,
       String difficulty, String questionType) {
     return NetworkModule.newInstance()

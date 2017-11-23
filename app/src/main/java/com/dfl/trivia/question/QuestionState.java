@@ -8,6 +8,8 @@ import org.parceler.Transient;
 
 /**
  * Created by diogoloureiro on 17/11/2017.
+ *
+ * Questions state, this is parcelable and it's saved on view lifecycle
  */
 
 @Parcel public class QuestionState implements QuestionContract.State {

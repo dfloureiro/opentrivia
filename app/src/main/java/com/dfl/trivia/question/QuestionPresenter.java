@@ -15,6 +15,8 @@ import java.util.List;
 
 /**
  * Created by diogoloureiro on 17/11/2017.
+ *
+ * Questions presenter. handles all the logic for the view
  */
 
 public class QuestionPresenter implements QuestionContract.Presenter {
@@ -79,6 +81,9 @@ public class QuestionPresenter implements QuestionContract.Presenter {
     return new QuestionState(questionsList, questionPosition, numberOfCorrectAnswers);
   }
 
+  /**
+   * request a list of questions
+   */
   private void getQuestionList() {
     compositeDisposable.add(
         requestFactory.getQuestionsRequest(sessionToken, amount, categoryId, difficulty,
@@ -132,6 +137,11 @@ public class QuestionPresenter implements QuestionContract.Presenter {
             }));
   }
 
+  /**
+   * show the current question on screen
+   *
+   * @param question current question
+   */
   private void showCurrentQuestion(Question question) {
     view.setCategoryTitle(question.getCategory());
     view.setDifficultyTitle(question.getDifficulty());

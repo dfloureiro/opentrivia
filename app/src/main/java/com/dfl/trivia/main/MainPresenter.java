@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 /**
  * Created by Loureiro on 13/11/2017.
+ *
+ * Main presenter. handles all the logic for the view
  */
 
 public class MainPresenter implements MainContract.Presenter {

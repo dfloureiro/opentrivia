@@ -8,6 +8,8 @@ import org.parceler.Transient;
 
 /**
  * Created by Loureiro on 17/11/2017.
+ *
+ * Main state, this is parcelable and it's saved on view lifecycle
  */
 
 @Parcel public class MainState implements MainContract.State {

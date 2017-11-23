@@ -9,6 +9,9 @@ import com.dfl.trivia.R;
 import com.dfl.trivia.TriviaSharedPreferences;
 import com.dfl.trivia.network.RequestFactory;
 
+/**
+ * init the fragment and the presenter for the questions screen
+ */
 public class QuestionActivity extends AppCompatActivity {
 
   public final static String CATEGORY_ID = "CATEGORY_ID";

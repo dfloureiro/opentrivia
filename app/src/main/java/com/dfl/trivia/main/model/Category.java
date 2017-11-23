@@ -5,6 +5,8 @@ import org.parceler.ParcelConstructor;
 
 /**
  * Created by Loureiro on 15/11/2017.
+ *
+ * Parcelable category
  */
 
 @Parcel public class Category {

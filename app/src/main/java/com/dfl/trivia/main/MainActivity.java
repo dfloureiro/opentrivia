@@ -9,6 +9,11 @@ import com.dfl.trivia.R;
 import com.dfl.trivia.TriviaSharedPreferences;
 import com.dfl.trivia.network.RequestFactory;
 
+/**
+ * Main activity
+ *
+ * init the fragment and the presenter for the main screen
+ */
 public class MainActivity extends AppCompatActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {

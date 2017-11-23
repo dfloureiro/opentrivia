@@ -6,6 +6,8 @@ import org.parceler.ParcelConstructor;
 
 /**
  * Created by diogoloureiro on 23/11/2017.
+ *
+ * Parcelable question
  */
 
 @Parcel public class Question {

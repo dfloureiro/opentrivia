@@ -10,9 +10,9 @@ import retrofit2.http.Query;
 
 /**
  * Created by Loureiro on 13/11/2017.
+ *
+ * interface of all calls to the opentdb API
  */
-
-//https://opentdb.com/api_config.php
 
 interface OpentdbApi {
 

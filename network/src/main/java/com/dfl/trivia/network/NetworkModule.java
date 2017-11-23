@@ -13,6 +13,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Loureiro on 13/11/2017.
+ *
+ * init and configure retrofit, client and interceptors
+ *
+ * this class is implemented as a singleton to avoid multiple instances in one app run
  */
 
 class NetworkModule {
