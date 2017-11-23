@@ -3,7 +3,7 @@ package com.dfl.trivia.main;
 import android.util.Log;
 import com.dfl.trivia.TriviaSharedPreferences;
 import com.dfl.trivia.main.model.Category;
-import com.dfl.trivia.networking.RequestFactory;
+import com.dfl.trivia.network.RequestFactory;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;

@@ -1,1 +1,1 @@
-include ':app', ':crashreports'
+include ':app', ':crashreports', ':network', ':datamodel'

@@ -145,18 +145,22 @@ public class QuestionActivityFragment extends Fragment implements QuestionContra
     getActivity().finish();
   }
 
-  @Override public void finishLoading(boolean hasError, boolean noResults) {
-    if (hasError) {
-      errorInvalidParameterLayout.setVisibility(View.VISIBLE);
-    } else if (noResults) {
-      errorNoResultsLayout.setVisibility(View.VISIBLE);
-    } else {
-      categoryTitle.setVisibility(View.VISIBLE);
-      difficultyTitle.setVisibility(View.VISIBLE);
-      questionText.setVisibility(View.VISIBLE);
-      errorInvalidParameterLayout.setVisibility(View.GONE);
-      errorNoResultsLayout.setVisibility(View.GONE);
-    }
+  @Override public void finishLoading() {
+    categoryTitle.setVisibility(View.VISIBLE);
+    difficultyTitle.setVisibility(View.VISIBLE);
+    questionText.setVisibility(View.VISIBLE);
+    errorInvalidParameterLayout.setVisibility(View.GONE);
+    errorNoResultsLayout.setVisibility(View.GONE);
+    loadingProgressBar.setVisibility(View.GONE);
+  }
+
+  @Override public void finishLoadingError() {
+    errorInvalidParameterLayout.setVisibility(View.VISIBLE);
+    loadingProgressBar.setVisibility(View.GONE);
+  }
+
+  @Override public void finishLoadingNoResults() {
+    errorNoResultsLayout.setVisibility(View.VISIBLE);
     loadingProgressBar.setVisibility(View.GONE);
   }
 

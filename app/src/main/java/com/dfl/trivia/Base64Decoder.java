@@ -1,7 +1,8 @@
 package com.dfl.trivia;
 
 import android.util.Base64;
-import com.dfl.trivia.data.questions.Result;
+import com.dfl.trivia.datamodel.questions.Result;
+import com.dfl.trivia.question.model.Question;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,23 +15,20 @@ public class Base64Decoder {
 
   private static final String CHARSET_NAME_TYPE = "UTF-8";
 
-  public static List<Result> decodeResults(List<Result> results)
+  public static List<Question> decodeResults(List<Result> results)
       throws UnsupportedEncodingException {
-    ArrayList<Result> resultList = new ArrayList<>();
+    ArrayList<Question> questionArrayList = new ArrayList<>();
     for (Result result : results) {
-      result.setCategory(decodeString(result.getCategory()));
-      result.setCorrectAnswer(decodeString(result.getCorrectAnswer()));
-      result.setDifficulty(decodeString(result.getDifficulty()));
-      result.setQuestion(decodeString(result.getQuestion()));
-      result.setType(decodeString(result.getType()));
       ArrayList<String> incorrectAnswers = new ArrayList<>();
       for (String answer : result.getIncorrectAnswers()) {
         incorrectAnswers.add(decodeString(answer));
       }
-      result.setIncorrectAnswers(incorrectAnswers);
-      resultList.add(result);
+      questionArrayList.add(
+          new Question(decodeString(result.getCategory()), decodeString(result.getType()),
+              decodeString(result.getDifficulty()), decodeString(result.getQuestion()),
+              decodeString(result.getCorrectAnswer()), incorrectAnswers));
     }
-    return resultList;
+    return questionArrayList;
   }
 
   private static String decodeString(String base64) throws UnsupportedEncodingException {

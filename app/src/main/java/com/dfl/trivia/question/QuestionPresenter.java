@@ -3,8 +3,8 @@ package com.dfl.trivia.question;
 import android.util.Log;
 import com.dfl.trivia.Base64Decoder;
 import com.dfl.trivia.TriviaSharedPreferences;
-import com.dfl.trivia.data.questions.Result;
-import com.dfl.trivia.networking.RequestFactory;
+import com.dfl.trivia.network.RequestFactory;
+import com.dfl.trivia.question.model.Question;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -32,7 +32,7 @@ public class QuestionPresenter implements QuestionContract.Presenter {
   private CompositeDisposable compositeDisposable;
 
   private String sessionToken;
-  private List<Result> questionsList;
+  private List<Question> questionsList;
   private int questionPosition;
   private int numberOfCorrectAnswers;
 
@@ -63,8 +63,8 @@ public class QuestionPresenter implements QuestionContract.Presenter {
         questionsList = state.getListOfQuestionResults();
         questionPosition = state.getCurrentQuestionPosition();
         numberOfCorrectAnswers = state.getNumberOfCorrectAnswers();
-        showCurrentQuestion();
-        view.finishLoading(false, false);
+        loadQuestion();
+        view.finishLoading();
         return;
       }
     }
@@ -117,33 +117,36 @@ public class QuestionPresenter implements QuestionContract.Presenter {
                     + ": Illegal parameter or unknown error occurred"));
               }
             })
-            .subscribe(questionsResponse -> {
-              if (!questionsResponse.getResults()
-                  .isEmpty()) {
-                questionsList = Base64Decoder.decodeResults(questionsResponse.getResults());
-                showCurrentQuestion();
-                view.finishLoading(false, false);
+            .map(questionsResponse -> Base64Decoder.decodeResults(questionsResponse.getResults()))
+            .subscribe(questionList -> {
+              if (!questionList.isEmpty()) {
+                questionsList = questionList;
+                loadQuestion();
+                view.finishLoading();
               } else {
-                view.finishLoading(false, true);
+                view.finishLoadingNoResults();
               }
             }, error -> {
               Log.e(TAG, error.getMessage());
-              view.finishLoading(true, false);
+              view.finishLoadingError();
             }));
   }
 
-  @Override public void showCurrentQuestion() {
+  private void showCurrentQuestion(Question question) {
+    view.setCategoryTitle(question.getCategory());
+    view.setDifficultyTitle(question.getDifficulty());
+    view.setQuestionText(question.getQuestion());
+    List<String> answersList = new ArrayList<>();
+    answersList.addAll(question.getIncorrectAnswers());
+    answersList.add(question.getCorrectAnswer());
+    Collections.shuffle(answersList);
+    view.setAnswers(question.getType()
+        .equals(MULTIPLE_GAME_TYPE), answersList);
+  }
+
+  @Override public void loadQuestion() {
     if (questionPosition < questionsList.size()) {
-      Result question = questionsList.get(questionPosition);
-      view.setCategoryTitle(question.getCategory());
-      view.setDifficultyTitle(question.getDifficulty());
-      view.setQuestionText(question.getQuestion());
-      List<String> answersList = new ArrayList<>();
-      answersList.addAll(question.getIncorrectAnswers());
-      answersList.add(question.getCorrectAnswer());
-      Collections.shuffle(answersList);
-      view.setAnswers(question.getType()
-          .equals(MULTIPLE_GAME_TYPE), answersList);
+      showCurrentQuestion(questionsList.get(questionPosition));
     } else {
       view.showResults(numberOfCorrectAnswers, questionsList.size());
     }
@@ -160,6 +163,6 @@ public class QuestionPresenter implements QuestionContract.Presenter {
           .getCorrectAnswer());
     }
     questionPosition++;
-    showCurrentQuestion();
+    loadQuestion();
   }
 }

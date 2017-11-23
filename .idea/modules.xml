@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/crashreports/crashreports.iml" filepath="$PROJECT_DIR$/crashreports/crashreports.iml" />
       <module fileurl="file://C:\Users\Loureiro\AndroidStudioProjects\trivia\crashreports\crashreports.iml" filepath="C:\Users\Loureiro\AndroidStudioProjects\trivia\crashreports\crashreports.iml" />
+      <module fileurl="file://$PROJECT_DIR$/datamodel/datamodel.iml" filepath="$PROJECT_DIR$/datamodel/datamodel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/network/network.iml" filepath="$PROJECT_DIR$/network/network.iml" />
       <module fileurl="file://$PROJECT_DIR$/trivia.iml" filepath="$PROJECT_DIR$/trivia.iml" />
     </modules>
   </component>

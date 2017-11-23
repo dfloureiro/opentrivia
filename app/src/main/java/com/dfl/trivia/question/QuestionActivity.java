@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import com.dfl.trivia.R;
 import com.dfl.trivia.TriviaSharedPreferences;
-import com.dfl.trivia.networking.RequestFactory;
+import com.dfl.trivia.network.RequestFactory;
 
 public class QuestionActivity extends AppCompatActivity {
 

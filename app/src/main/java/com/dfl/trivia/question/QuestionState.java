@@ -1,7 +1,6 @@
 package com.dfl.trivia.question;
 
-import com.dfl.trivia.data.questions.Result;
-
+import com.dfl.trivia.question.model.Question;
 import java.util.List;
 import org.parceler.Parcel;
 import org.parceler.ParcelConstructor;
@@ -14,11 +13,11 @@ import org.parceler.ParcelConstructor;
 
   static final String QUESTION_STATE_KEY = "QUESTION_STATE_KEY";
 
-  private final List<Result> results;
+  private final List<Question> results;
   private final int questionPosition;
   private final int numberOfCorrectAnswers;
 
-  @ParcelConstructor QuestionState(List<Result> results, int questionPosition,
+  @ParcelConstructor QuestionState(List<Question> results, int questionPosition,
       int numberOfCorrectAnswers) {
 
     this.results = results;
@@ -26,7 +25,7 @@ import org.parceler.ParcelConstructor;
     this.numberOfCorrectAnswers = numberOfCorrectAnswers;
   }
 
-  @Override public List<Result> getListOfQuestionResults() {
+  @Override public List<Question> getListOfQuestionResults() {
     return results;
   }
 
