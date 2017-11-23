@@ -23,8 +23,6 @@ public class Base64Decoder {
    * @param results list to decode
    *
    * @return list of decoded questions
-   *
-   * @throws UnsupportedEncodingException
    */
   public static List<Question> decodeResults(List<Result> results)
       throws UnsupportedEncodingException {
@@ -48,8 +46,6 @@ public class Base64Decoder {
    * @param base64 string to decode
    *
    * @return decoded string
-   *
-   * @throws UnsupportedEncodingException
    */
   private static String decodeString(String base64) throws UnsupportedEncodingException {
     byte[] data = Base64.decode(base64, Base64.DEFAULT);
