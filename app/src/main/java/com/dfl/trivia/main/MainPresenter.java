@@ -18,11 +18,11 @@ public class MainPresenter implements MainContract.Presenter {
 
   private final static String TAG = MainPresenter.class.getCanonicalName();
 
-  private MainContract.View view;
-  private RequestFactory requestFactory;
-  private TriviaSharedPreferences triviaSharedPreferences;
+  private final MainContract.View view;
+  private final RequestFactory requestFactory;
+  private final TriviaSharedPreferences triviaSharedPreferences;
 
-  private CompositeDisposable compositeDisposable;
+  private final CompositeDisposable compositeDisposable;
   private ArrayList<Category> categoryArrayList;
 
   MainPresenter(MainContract.View view, RequestFactory requestFactory,

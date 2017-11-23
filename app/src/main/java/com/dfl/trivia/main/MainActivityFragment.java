@@ -28,12 +28,12 @@ import org.parceler.Parcels;
  */
 public class MainActivityFragment extends Fragment implements MainContract.View {
 
-  String[] difficulties = new String[] { "Any Difficulty", "Easy", "Medium", "Hard" };
-  String[] difficultiesValues = new String[] { null, "easy", "medium", "hard" };
-  String[] gameTypes = new String[] { "Any Type", "Multiple Choices", "True/False" };
-  String[] gameTypesValues = new String[] { null, "multiple", "boolean" };
-  String[] amounts = new String[] { "10", "20", "30", "40", "50" };
-  int[] amountsValues = new int[] { 10, 20, 30, 40, 50 };
+  private final String[] difficulties = new String[] { "Any Difficulty", "Easy", "Medium", "Hard" };
+  private final String[] difficultiesValues = new String[] { null, "easy", "medium", "hard" };
+  private final String[] gameTypes = new String[] { "Any Type", "Multiple Choices", "True/False" };
+  private final String[] gameTypesValues = new String[] { null, "multiple", "boolean" };
+  private final String[] amounts = new String[] { "10", "20", "30", "40", "50" };
+  private final int[] amountsValues = new int[] { 10, 20, 30, 40, 50 };
 
   private final static String CATEGORIES_POSITION_KEY = "CATEGORIES_POSITION_KEY";
   private final static String DIFFICULTIES_POSITION_KEY = "DIFFICULTIES_POSITION_KEY";

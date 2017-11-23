@@ -10,14 +10,15 @@ import org.parceler.ParcelConstructor;
 
 @Parcel public class Question {
 
-  private final String category;
-  private final String type;
-  private final String difficulty;
-  private final String question;
-  private final String correctAnswer;
-  private final List<String> incorrectAnswers;
+  String category;
+  String type;
+  String difficulty;
+  String question;
+  String correctAnswer;
+  List<String> incorrectAnswers;
 
-  @ParcelConstructor public Question(String category, String type, String difficulty, String question,
+  @ParcelConstructor
+  public Question(String category, String type, String difficulty, String question,
       String correctAnswer, List<String> incorrectAnswers) {
     this.category = category;
     this.type = type;

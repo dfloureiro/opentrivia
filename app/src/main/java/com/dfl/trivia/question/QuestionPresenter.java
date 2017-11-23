@@ -23,15 +23,15 @@ public class QuestionPresenter implements QuestionContract.Presenter {
   private final static String MULTIPLE_GAME_TYPE = "multiple";
 
   private final QuestionContract.View view;
-  private RequestFactory requestFactory;
-  private TriviaSharedPreferences triviaSharedPreferences;
+  private final RequestFactory requestFactory;
+  private final TriviaSharedPreferences triviaSharedPreferences;
   private final int amount;
   private final String categoryId;
   private final String difficulty;
   private final String questionType;
-  private CompositeDisposable compositeDisposable;
+  private final CompositeDisposable compositeDisposable;
 
-  private String sessionToken;
+  private final String sessionToken;
   private List<Question> questionsList;
   private int questionPosition;
   private int numberOfCorrectAnswers;

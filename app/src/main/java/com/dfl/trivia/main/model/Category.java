@@ -9,8 +9,8 @@ import org.parceler.ParcelConstructor;
 
 @Parcel public class Category {
 
-  private int id;
-  private String name;
+  int id;
+  String name;
 
   @ParcelConstructor public Category(Integer id, String name) {
     this.id = id;
@@ -21,15 +21,7 @@ import org.parceler.ParcelConstructor;
     return id;
   }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 }

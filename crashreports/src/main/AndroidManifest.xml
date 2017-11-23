@@ -8,7 +8,7 @@
       android:label="@string/app_name">
     <meta-data
         android:name="io.fabric.ApiKey"
-        android:value=""
+        android:value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         />
   </application>
 

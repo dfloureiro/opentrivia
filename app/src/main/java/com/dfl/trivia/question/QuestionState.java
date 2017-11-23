@@ -4,6 +4,7 @@ import com.dfl.trivia.question.model.Question;
 import java.util.List;
 import org.parceler.Parcel;
 import org.parceler.ParcelConstructor;
+import org.parceler.Transient;
 
 /**
  * Created by diogoloureiro on 17/11/2017.
@@ -11,11 +12,11 @@ import org.parceler.ParcelConstructor;
 
 @Parcel public class QuestionState implements QuestionContract.State {
 
-  static final String QUESTION_STATE_KEY = "QUESTION_STATE_KEY";
+  @Transient static final String QUESTION_STATE_KEY = "QUESTION_STATE_KEY";
 
-  private final List<Question> results;
-  private final int questionPosition;
-  private final int numberOfCorrectAnswers;
+  List<Question> results;
+  int questionPosition;
+  int numberOfCorrectAnswers;
 
   @ParcelConstructor QuestionState(List<Question> results, int questionPosition,
       int numberOfCorrectAnswers) {

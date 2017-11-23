@@ -10,7 +10,7 @@ public class TriviaSharedPreferences {
 
   private final static String SESSION_TOKEN_KEY = "SESSION_TOKEN_KEY";
 
-  private SharedPreferences sharedPreferences;
+  private final SharedPreferences sharedPreferences;
 
   public TriviaSharedPreferences(SharedPreferences sharedPreferences) {
     this.sharedPreferences = sharedPreferences;

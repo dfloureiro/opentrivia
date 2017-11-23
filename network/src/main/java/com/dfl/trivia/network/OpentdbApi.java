@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 
 //https://opentdb.com/api_config.php
 
-public interface OpentdbApi {
+interface OpentdbApi {
 
   @GET("api_category.php") Flowable<TriviaCategoryList> getTriviaCategoryList();
 
