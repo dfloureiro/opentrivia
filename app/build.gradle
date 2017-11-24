@@ -38,6 +38,8 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   testImplementation "junit:junit:${JUNIT_VERSION}"
+  testImplementation "org.mockito:mockito-core:${MOCKITO_VERSION}"
+  androidTestImplementation "org.mockito:mockito-android:${MOCKITO_VERSION}"
   androidTestImplementation "com.android.support.test:runner:${TESTRUNNER_VERSION}"
   androidTestImplementation "com.android.support.test.espresso:espresso-core:${ESPRESSO_VERSION}"
 

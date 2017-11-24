@@ -26,6 +26,7 @@ task clean(type: Delete) {
 
 ext {
   JUNIT_VERSION = '4.12'
+  MOCKITO_VERSION = '2.12.0'
   TESTRUNNER_VERSION = '1.0.1'
   ESPRESSO_VERSION = '3.0.1'
 
