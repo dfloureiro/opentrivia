@@ -1,6 +1,5 @@
 package com.dfl.trivia.main;
 
-import android.util.Log;
 import com.dfl.trivia.TriviaSharedPreferences;
 import com.dfl.trivia.main.model.Category;
 import com.dfl.trivia.network.RequestFactory;
@@ -27,7 +26,7 @@ public class MainPresenter implements MainContract.Presenter {
   private final CompositeDisposable compositeDisposable;
   private ArrayList<Category> categoryArrayList;
 
-  MainPresenter(MainContract.View view, RequestFactory requestFactory,
+  public MainPresenter(MainContract.View view, RequestFactory requestFactory,
       TriviaSharedPreferences triviaSharedPreferences) {
     this.view = view;
     this.requestFactory = requestFactory;
@@ -64,12 +63,12 @@ public class MainPresenter implements MainContract.Presenter {
     return new MainState(categoryArrayList);
   }
 
-  public void getSessionToken() {
+  @Override public void getSessionToken() {
     compositeDisposable.add(requestFactory.getSessionTokenRequest()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(sessionTokenResponse -> triviaSharedPreferences.saveSessionToken(
-            sessionTokenResponse.getToken()), error -> Log.e(TAG, error.getMessage())));
+            sessionTokenResponse.getToken()), error -> view.finishLoading(true)));
   }
 
   @Override public void getTriviaCategoryList() {
@@ -83,10 +82,7 @@ public class MainPresenter implements MainContract.Presenter {
           view.finishLoading(false);
           categoryArrayList.add(category);
           view.ShowCategory(category);
-        }, error -> {
-          view.finishLoading(true);
-          Log.e(TAG, error.getMessage());
-        }));
+        }, error -> view.finishLoading(true)));
   }
 
   @Override public String getSelectedCategoryId(int position) {
